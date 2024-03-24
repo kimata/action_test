@@ -17,15 +17,15 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
-      - name: Set version1
-        run: echo ${{ github.ref_name }}
-      - name: Set version2
-        run: echo "${{ github.ref_name }}" | tr -d 'v'
+      # - name: Set version1
+      #   run: echo ${{ github.ref_name }}
+      # - name: Set version2
+      #   run: echo "${{ github.ref_name }}" | tr -d 'v'
 
 
       - name: Set version
         id: set_version
-        run: echo "value=${{ github.ref_name }}" | tr -d 'v' >> "$GITHUB_OUTPUT"
+        run: echo "value=$(echo ${{ github.ref_name }} | sed 's/v//')" >> "$GITHUB_OUTPUT"
 
   build:
     needs: prepare
