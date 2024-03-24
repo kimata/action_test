@@ -9,6 +9,8 @@ jobs:
         os: [macos-latest, ubuntu-latest, windows-latest]
       fail-fast: false
 
+    runs-on: ${{ matrix.os }}
+      
     steps:
       - name: Check-out repository
         uses: actions/checkout@v3
