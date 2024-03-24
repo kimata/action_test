@@ -81,7 +81,7 @@ jobs:
           name: "${{ matrix.os }} Build"
           path: "./"
 
-      - name: Display structure of downloaded files
+      - name: Check artifact
         run: ls -R
 
       - name: Create release
@@ -95,21 +95,8 @@ jobs:
           draft: false
           prerelease: false
 
-      - name: Zip files
-        shell: pwsh
-        run: |
-          if ($env:RUNNER_OS -eq "Windows") {
-              7z a amazhist-${{ matrix.os }}-binary.zip .
-          }
-          else {
-              zip -r amazhist-${{ matrix.os }}-binary.zip .
-          }
-          
-      # - name: Archive Release
-      #   uses: thedoctor0/zip-release@main
-      #   with:
-      #     type: 'zip'
-      #     filename: 
+      - name: Archive binary
+        run: zip --junk-paths amazhist amazhist-${{ matrix.os }}-binary.zip .
 
       - name: Upload Release Asset
         id: upload-release-asset
