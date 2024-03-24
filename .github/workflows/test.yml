@@ -53,7 +53,11 @@ jobs:
       - name: Poetry Install Dependencies
         run: |
           poetry install --no-interaction
-                  
+
+      - name: Poetry Install Dependencies
+        run: |
+          echo ${{ needs.prepare.outputs.version }}
+          
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@main
         with:
