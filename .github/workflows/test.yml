@@ -2,11 +2,6 @@ name: Make release
 on:
     push:
 
-# on:
-#   workflow_run:
-#     workflows: ["Build executable"]
-#     types: [completed]
-
 jobs:
   build:
     strategy:
@@ -28,13 +23,12 @@ jobs:
           name: ${{ matrix.os }} Build
           path: |
             *
-  
   release:
      matrix:
        os: [macos-latest, ubuntu-latest, windows-latest]
     
     runs-on: ubuntu-latest
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -45,6 +39,8 @@ jobs:
       - name: Display structure of downloaded files
         run: ls -R
 
+# if: ${{ github.event.workflow_run.conclusion == 'success' }}
+        
       # - name: Create release
       #   id: create_release
       #   uses: actions/create-release@v1.0.0
@@ -67,3 +63,8 @@ jobs:
       #     asset_path: "./binaryset/${{ steps.step_filename.outputs.the_asset_name }}"
       #     asset_name: "${{ steps.step_filename.outputs.the_asset_name }}"
       #     asset_content_type: application/octet-stream
+
+# on:
+#   workflow_run:
+#     workflows: ["Build executable"]
+#     types: [completed]
