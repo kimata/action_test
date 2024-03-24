@@ -79,7 +79,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: "${{ matrix.os }} Build"
-          path: "./"
+          path: "amazhist-${{ matrix.os }}-binary/"
 
       - name: Check artifact
         run: ls -R
@@ -96,7 +96,7 @@ jobs:
           prerelease: false
 
       - name: Archive binary
-        run: zip amazhist-${{ matrix.os }}-binary.zip .
+        run: zip amazhist-${{ matrix.os }}-binary.zip amazhist-${{ matrix.os }}-binary
 
       - name: Upload Release Asset
         id: upload-release-asset
