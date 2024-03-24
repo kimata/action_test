@@ -35,21 +35,21 @@ jobs:
 
     
     steps:
-
-      
-      - name: Create release
-        id: create_release
-        uses: actions/create-release@v1.0.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }}
-          # draft: false
-          # prerelease: false
-
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v4
+      - name: Download artifact
+        uses: actions/download-artifact@v4
           
       - name: Display structure of downloaded files
         run: ls -R
+
+      
+      # - name: Create release
+      #   id: create_release
+      #   uses: actions/create-release@v1.0.0
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #   with:
+      #     tag_name: ${{ github.ref }}
+      #     release_name: Release ${{ github.ref }}
+          # draft: false
+          # prerelease: false
+
