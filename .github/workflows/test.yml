@@ -24,22 +24,21 @@ jobs:
           path: |
             *
 
-            
-  # release:
-  #    matrix:
-  #      os: [macos-latest, ubuntu-latest, windows-latest]
+  release:
+     matrix:
+       os: [macos-latest, ubuntu-latest, windows-latest]
     
-  #   runs-on: ubuntu-latest
+    runs-on: ubuntu-latest
 
-  #   steps:
-  #     - name: Download artifact
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: "${{ matrix.os }}"
-  #         path: "./binary/"
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: "${{ matrix.os }}"
+          path: "./binary/"
 
-  #     - name: Display structure of downloaded files
-  #       run: ls -R
+      - name: Display structure of downloaded files
+        run: ls -R
 
 # if: ${{ github.event.workflow_run.conclusion == 'success' }}
         
