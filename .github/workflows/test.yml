@@ -17,6 +17,12 @@ jobs:
     runs-on: ubuntu-latest
       
     steps:
+      - name: Set version1
+        run: echo ${{ github.ref_name }}
+      - name: Set version2
+        run: echo "${{ github.ref_name }}" | tr -d 'v'
+
+
       - name: Set version
         id: set_version
         run: echo "value=${{ github.ref_name }}" | tr -d 'v' >> "$GITHUB_OUTPUT"
@@ -56,7 +62,7 @@ jobs:
 
       - name: Poetry Install Dependencies
         run: |
-          echo ${{ needs.prepare.outputs.version }}
+          echo "${{ needs.prepare.outputs.version }}"
           
       - name: Build Executable
         uses: Nuitka/Nuitka-Action@main
