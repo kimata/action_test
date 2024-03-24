@@ -4,6 +4,10 @@ on:
     tags:
       - 'v*'
 
+env:
+  PROJECT_NAME: amazhist
+  SCRIPT_NAME: a.py
+      
 jobs:
   build:
     strategy:
@@ -41,9 +45,9 @@ jobs:
         uses: Nuitka/Nuitka-Action@main
         with:
           nuitka-version: main
-          script-name: a.py
+          script-name: ${{ env.SCRIPT_NAME }}
 
-          product-name: amazhist
+          product-name: ${{ env.PROJECT_NAME }}
           file-version: 0.1.0
           product-version: 0.1.0
 
@@ -62,7 +66,6 @@ jobs:
             build/*.bin
             build/*.app/**/*
             build/config.example.yaml
-
 
   release:
     needs: build
@@ -97,7 +100,7 @@ jobs:
         os: [ubuntu-latest, windows-latest]
         include:
           - os: ubuntu-latest
-            label: ubuntu
+            label: ubuntu_x64
           - os: windows-latest
             label: windows_x64
 
@@ -109,13 +112,13 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: "${{ matrix.os }} build"
-          path: "amazhist-${{ matrix.os }}-binary/"
+          path: "${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary/"
 
       - name: Check artifact
         run: ls -R
 
       - name: Archive binary
-        run: zip --junk-paths --recurse-paths amazhist-${{ matrix.os }}-binary.zip amazhist-${{ matrix.os }}-binary
+        run: zip --junk-paths --recurse-paths ${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary.zip ${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -124,6 +127,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{needs.release.outputs.upload_url}}
-          asset_name: amazhist-${{ matrix.label }}-binary.zip
-          asset_path: amazhist-${{ matrix.os }}-binary.zip
+          asset_name: ${{ env.PROJECT_NAME }}-${{ matrix.label }}-binary.zip
+          asset_path: ${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary.zip
           asset_content_type: application/octet-stream
