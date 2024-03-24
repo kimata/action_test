@@ -25,25 +25,26 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ runner.os }} Build
+          name: ${{ matrix.os }} Build
           path: |
             *
   
   release:
+     matrix:
+       os: [macos-latest, ubuntu-latest, windows-latest]
+    
     runs-on: ubuntu-latest
     # if: ${{ github.event.workflow_run.conclusion == 'success' }}
-
-    
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: Linux Build
-          
+          name: "${{ matrix.os }}"
+          path: "./binary/"
+
       - name: Display structure of downloaded files
         run: ls -R
 
-      
       # - name: Create release
       #   id: create_release
       #   uses: actions/create-release@v1.0.0
@@ -52,6 +53,17 @@ jobs:
       #   with:
       #     tag_name: ${{ github.ref }}
       #     release_name: Release ${{ github.ref }}
-          # draft: false
-          # prerelease: false
+      #     draft: false
+      #     prerelease: false
 
+
+      # - name: Attach the artifact
+      #   uses: actions/upload-release-asset@v1
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+
+      #   with:
+      #     upload_url: ${{ needs.job2.outputs.the_upload_url }}
+      #     asset_path: "./binaryset/${{ steps.step_filename.outputs.the_asset_name }}"
+      #     asset_name: "${{ steps.step_filename.outputs.the_asset_name }}"
+      #     asset_content_type: application/octet-stream
