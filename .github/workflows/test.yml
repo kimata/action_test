@@ -23,6 +23,8 @@ jobs:
           name: ${{ matrix.os }} Build
           path: |
             *
+
+            
   release:
      matrix:
        os: [macos-latest, ubuntu-latest, windows-latest]
