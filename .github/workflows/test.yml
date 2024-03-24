@@ -56,7 +56,7 @@ jobs:
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.os }} Build
+          name: "${{ matrix.os }} build"
           path: |
             build/*.exe
             build/*.bin
@@ -78,7 +78,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: "${{ matrix.os }} Build"
+          name: "${{ matrix.os }} build"
           path: "amazhist-${{ matrix.os }}-binary/"
 
       - name: Check artifact
@@ -105,8 +105,8 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: "./"
-          asset_name: amazhist-${{ matrix.os }}-binary.zip
+          asset_path: amazhist-${{ matrix.os }}-binary.zip
+          asset_name: "${{ matrix.os }} binary"
           asset_content_type: application/octet-stream
 
       # - name: Attach the artifact
