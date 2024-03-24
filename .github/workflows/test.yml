@@ -38,8 +38,7 @@ jobs:
         uses: Nuitka/Nuitka-Action@main
         with:
           nuitka-version: main
-          script-name: app/amazhist.py
-          include-package-data: selenium
+          script-name: a.py
 
           product-name: amazhist
           file-version: 0.1.0
@@ -59,6 +58,8 @@ jobs:
 
 
   release:
+    needs: build
+    
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
