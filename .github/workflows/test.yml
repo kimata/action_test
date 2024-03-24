@@ -75,15 +75,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: "${{ matrix.os }} build"
-          path: "amazhist-${{ matrix.os }}-binary/"
-
-      - name: Check artifact
-        run: ls -R
-
       - name: Create release
         id: create_release
         uses: actions/create-release@v1.0.0
@@ -94,6 +85,27 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
+
+
+  release-binary:
+    needs: release
+    
+    strategy:
+      matrix:
+        # os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest]
+    
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: "${{ matrix.os }} build"
+          path: "amazhist-${{ matrix.os }}-binary/"
+
+      - name: Check artifact
+        run: ls -R
 
       - name: Archive binary
         run: zip amazhist-${{ matrix.os }}-binary.zip amazhist-${{ matrix.os }}-binary
@@ -106,7 +118,6 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: amazhist-${{ matrix.os }}-binary.zip
-          asset_name: "${{ matrix.os }} binary"
           asset_content_type: application/octet-stream
 
       # - name: Attach the artifact
