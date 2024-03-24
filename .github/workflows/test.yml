@@ -66,7 +66,10 @@ jobs:
 
   release:
     needs: build
-    
+
+    outputs:
+      upload_url: ${{ steps.save_upload_url.outputs.value }}
+
     runs-on: ubuntu-latest
 
     steps:
@@ -80,11 +83,14 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-
+          
+      - name: Save upload_url
+        id: save_upload_url
+        run: echo "value=${{ steps.create_release.outputs.upload_url }}" >> "$GITHUB_OUTPUT"
 
   release-binary:
     needs: release
-    
+
     strategy:
       matrix:
         # os: [macos-latest, ubuntu-latest, windows-latest]
@@ -117,7 +123,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          upload_url: ${{needs.release.outputs.upload_url}}
           asset_path: amazhist-${{ matrix.os }}-binary.zip
           asset_content_type: application/octet-stream
 
