@@ -96,7 +96,7 @@ jobs:
           prerelease: false
 
       - name: Archive binary
-        run: zip --junk-paths amazhist amazhist-${{ matrix.os }}-binary.zip .
+        run: zip amazhist-${{ matrix.os }}-binary.zip .
 
       - name: Upload Release Asset
         id: upload-release-asset
