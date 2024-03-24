@@ -115,7 +115,7 @@ jobs:
         run: ls -R
 
       - name: Archive binary
-        run: zip amazhist-${{ matrix.os }}-binary.zip amazhist-${{ matrix.os }}-binary
+        run: zip --junk-paths --recurse-paths amazhist-${{ matrix.os }}-binary.zip amazhist-${{ matrix.os }}-binary
 
       - name: Upload Release Asset
         id: upload-release-asset
