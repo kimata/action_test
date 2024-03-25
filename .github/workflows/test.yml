@@ -124,8 +124,8 @@ jobs:
 
 
     env:
-      archive_name: ${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary-${{ needs.prepare.outputs.version }}
-      archive_label: ${{ env.PROJECT_NAME }}-${{ matrix.label }}-binary-${{ needs.prepare.outputs.version }}
+      ARCHIVE_NAME: ${{ PROJECT_NAME }}-${{ matrix.os }}-binary-${{ needs.prepare.outputs.version }}
+      ARCHIVE_LABEL: ${{ PROJECT_NAME }}-${{ matrix.label }}-binary-${{ needs.prepare.outputs.version }}
             
     runs-on: ubuntu-latest
 
@@ -134,10 +134,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: "${{ matrix.os }} build"
-          path: ${{ archive_name }}}
+          path: ${{ ARCHIVE_NAME }}}
 
       - name: Archive binary
-        run: zip --junk-paths --recurse-paths ${{ archive_name }}}.zip ${{ archive_name }}}
+        run: zip --junk-paths --recurse-paths ${{ ARCHIVE_NAME }}}.zip ${{ ARCHIVE_NAME }}}
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -146,6 +146,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{needs.release.outputs.upload_url}}
-          asset_name: ${{ archive_label }}}.zip
-          asset_path: ${{ archive_name }}}.zip
+          asset_name: ${{ ARCHIVE_LABEL }}}.zip
+          asset_path: ${{ ARCHIVE_NAME }}}.zip
           asset_content_type: application/octet-stream
