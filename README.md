@@ -5,6 +5,8 @@ Nuitka を使って Python スクリプトを実行ファイルに変換する G
 
 ## 前提
 
+### 想定しているプロジェクトの構成・運用
+
 下記の前提とします．
 
 - Poetry でパッケージを管理
@@ -25,21 +27,11 @@ Hellow World!
 ```
 ## 生成される実行ファイル
 
- % cat config.example.yaml
-message: Hellow World!
- % poetry run ./test.py -c config.example.yaml
-Hellow World!
+Linux の向けの場合，下記のようにして実行できます．
 
 
-### 
+## Github Actions の記述
 
+`.github/workflows/test.yml`
 
-## 実行
-
-以下のようにします．`build` は一回だけ実行すればOKです．
-
-```
-docker-compose build
-docker-compose run --rm amazhist
-```
 
