@@ -136,6 +136,10 @@ jobs:
           name: "${{ matrix.os }} build"
           path: ${{ env.ARCHIVE_NAME }}}
 
+      - name: Set execution permission
+        run: |
+          chmod -f +x ${{ env.ARCHIVE_NAME }}}/*.bin
+
       - name: Archive binary
         run: zip --junk-paths --recurse-paths ${{ env.ARCHIVE_NAME }}}.zip ${{ env.ARCHIVE_NAME }}}
 
