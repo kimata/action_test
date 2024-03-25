@@ -127,8 +127,8 @@ jobs:
     steps:
       - name: Define names
         run: |
-          echo "ARCHIVE_NAME=${{ PROJECT_NAME }}-${{ matrix.os }}-binary-${{ needs.prepare.outputs.version }}" >> $GITHUB_ENV
-          echo "ARCHIVE_LABEL=${{ PROJECT_NAME }}-${{ matrix.label }}-binary-${{ needs.prepare.outputs.version }}" >> $GITHUB_ENV
+          echo "ARCHIVE_NAME=${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary-${{ needs.prepare.outputs.version }}" >> $GITHUB_ENV
+          echo "ARCHIVE_LABEL=${{ env.PROJECT_NAME }}-${{ matrix.label }}-binary-${{ needs.prepare.outputs.version }}" >> $GITHUB_ENV
       
       - name: Download artifact
         uses: actions/download-artifact@v4
