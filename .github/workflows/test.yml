@@ -122,6 +122,10 @@ jobs:
           - os: windows-latest
             label: windows_x64
 
+
+    env:
+      archive_name: ${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary-${{ needs.prepare.outputs.version }}
+      archive_label: ${{ env.PROJECT_NAME }}-${{ matrix.label }}-binary-${{ needs.prepare.outputs.version }}
             
     runs-on: ubuntu-latest
 
@@ -130,10 +134,10 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: "${{ matrix.os }} build"
-          path: "${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary-${{ needs.prepare.outputs.version }}/"
+          path: ${{ archive_name }}}
 
       - name: Archive binary
-        run: zip --junk-paths --recurse-paths ${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary.zip ${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary-${{ needs.prepare.outputs.version }}
+        run: zip --junk-paths --recurse-paths ${{ archive_name }}}.zip ${{ archive_name }}}
 
       - name: Upload Release Asset
         id: upload-release-asset
@@ -142,6 +146,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{needs.release.outputs.upload_url}}
-          asset_name: ${{ env.PROJECT_NAME }}-${{ matrix.label }}-binary-${{ needs.prepare.outputs.version }}.zip
-          asset_path: ${{ env.PROJECT_NAME }}-${{ matrix.os }}-binary-${{ needs.prepare.outputs.version }}.zip
+          asset_name: ${{ archive_label }}}.zip
+          asset_path: ${{ archive_name }}}.zip
           asset_content_type: application/octet-stream
