@@ -4,10 +4,10 @@
 テスト用ダミーアプリです．
 
 Usage:
-  test.py [-c CONFIG]
+  test.py [-i CONFIG]
 
 Options:
-  -c CONFIG     : CONFIG を設定ファイルとして読み込んで実行します．[default: config.yaml]
+  -i CONFIG     : CONFIG を設定ファイルとして読み込んで実行します．[default: config.yaml]
 """
 
 
@@ -21,6 +21,6 @@ if __name__ == "__main__":
 
     args = docopt(__doc__)
 
-    with open(args["-c"], "r") as file:
+    with open(args["-i"], "r") as file:
         config = yaml.load(file, Loader=yaml.SafeLoader)
         say(config)
