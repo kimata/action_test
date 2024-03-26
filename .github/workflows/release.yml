@@ -119,7 +119,7 @@ jobs:
       matrix:
         os: [windows-latest]
 
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
@@ -127,12 +127,20 @@ jobs:
           name: "${{ matrix.os }} build"
           path: test
       
-      - name: Sign
-        uses: dlemstra/code-sign-action@v1
+
+      - name: Sign binary
+        uses: lando/code-sign-action@v2
         with:
-          certificate: '${{ secrets.CERTIFICATE }}'
-          password: '${{ secrets.CERTIFICATE_PASSWORD }}'
-          folder: test
+          file: test/test.exe
+          certificate-data: ${{ secrets.CERTIFICATE }}
+          certificate-password: ${{ secrets.PASSWORD }}
+
+          # - name: Sign
+      #   uses: dlemstra/code-sign-action@v1
+      #   with:
+      #     certificate: '${{ secrets.CERTIFICATE }}'
+      #     password: '${{ secrets.CERTIFICATE_PASSWORD }}'
+      #     folder: test
 
       - name: Upload signed binary
         uses: actions/upload-artifact@v4
