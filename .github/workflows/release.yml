@@ -121,30 +121,26 @@ jobs:
 
     runs-on: windows-latest
     steps:
-      - name: Define names
-        run: |
-          echo "ARCHIVE_NAME=archive" >> $GITHUB_ENV
-      
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
           name: "${{ matrix.os }} build"
-          path: ${{ env.ARCHIVE_NAME }}
+          path: test
       
       - name: Sign
         uses: dlemstra/code-sign-action@v1
         with:
           certificate: '${{ secrets.CERTIFICATE }}'
           password: '${{ secrets.CERTIFICATE_PASSWORD }}'
-          folder: ${{ env.ARCHIVE_NAME }}
+          folder: test
 
       - name: Upload signed binary
         uses: actions/upload-artifact@v4
         with:
           name: "Signed binary"
           path: |
-            ${{ env.ARCHIVE_NAME }}/*.exe
-          
+            test/*.exe
+
   release-binary:
     needs: [ prepare, release ]
 
