@@ -129,7 +129,7 @@ jobs:
       
 
       - name: Sign binary
-        uses: lando/code-sign-action@v2
+        uses: kimata/code-sign-action@v1
         with:
           file: test/test.exe
           certificate-data: ${{ secrets.CERTIFICATE }}
