@@ -73,6 +73,14 @@ jobs:
 
           no-deployment-flag: self-execution
 
+      - name: Sign
+        if: runner.os == 'Windows'
+        uses: kimata/code-sign-action@v1
+        with:
+          file: build/*.exe
+          certificate-data: ${{ secrets.CERTIFICATE }}
+          certificate-password: ${{ secrets.PASSWORD }}
+          
       - name: Copy config
         run: cp config.example.yaml build/config.example.yaml
           
@@ -106,7 +114,7 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-          
+  
       - name: Save upload_url
         id: save_upload_url
         run: echo "value=${{ steps.create_release.outputs.upload_url }}" >> "$GITHUB_OUTPUT"
@@ -174,7 +182,7 @@ jobs:
         with:
           name: "${{ matrix.os }} build"
           path: ${{ env.ARCHIVE_NAME }}
-
+          
       - name: Set execution permission
         run: |
           chmod -f +x ${{ env.ARCHIVE_NAME }}/*.bin || true
