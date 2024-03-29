@@ -26,6 +26,9 @@ if __name__ == "__main__":
     from docopt import docopt
     import yaml
 
+    for x in os.environ:
+        print((x, os.getenv(x)))
+
     args = docopt(__doc__)
 
     config_path = abs_path(args["-c"])
