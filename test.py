@@ -10,10 +10,16 @@ Options:
   -c CONFIG     : CONFIG を設定ファイルとして読み込んで実行します．[default: config.yaml]
 """
 import time
+import pathlib
+import os
 
 
 def say(config):
     print(config["message"])
+
+
+def abs_path(config_path):
+    return pathlib.Path(os.getcwd(), config_path)
 
 
 if __name__ == "__main__":
@@ -22,7 +28,8 @@ if __name__ == "__main__":
 
     args = docopt(__doc__)
 
-    with open(args["-c"], "r") as file:
+    config_path = abs_path(args["-c"])
+    with open(config_path, "r") as file:
         config = yaml.load(file, Loader=yaml.SafeLoader)
         while True:
             say(config)

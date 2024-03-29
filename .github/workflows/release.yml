@@ -203,6 +203,7 @@ jobs:
       - name: Set execution permission
         run: |
           chmod -f +x ${{ env.ARCHIVE_NAME }}/*.bin || true
+          chmod -f +x ${{ env.ARCHIVE_NAME }}/*.app/Contents/MacOS/* || true
 
       - name: Archive binary
         run: zip --recurse-paths ${{ env.ARCHIVE_NAME }}.zip ${{ env.ARCHIVE_NAME }}
