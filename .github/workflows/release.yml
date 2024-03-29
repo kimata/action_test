@@ -26,7 +26,7 @@ jobs:
   
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest-xlarge]
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
@@ -71,6 +71,11 @@ jobs:
           standalone: true
           onefile: true
 
+          windows-icon-from-ico: icon.png
+          macos-app-icon: icon.png
+          macos-app-name: ${{ env.PROJECT_NAME }}
+          macos-create-app-bundle: true
+
           no-deployment-flag: self-execution
 
       - name: Check if secret exists
@@ -83,7 +88,7 @@ jobs:
             Write-Output "secret_exists=false" >> $env:GITHUB_OUTPUT
           }
 
-      - name: Sign
+      - name: Sign code
         if: (runner.os == 'Windows') && (steps.check_secret.outputs.secret_exists == 'true')
         uses: kimata/code-sign-action@v1
         with:
