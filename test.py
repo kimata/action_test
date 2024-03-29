@@ -9,6 +9,7 @@ Usage:
 Options:
   -c CONFIG     : CONFIG を設定ファイルとして読み込んで実行します．[default: config.yaml]
 """
+import time
 
 
 def say(config):
@@ -23,4 +24,6 @@ if __name__ == "__main__":
 
     with open(args["-c"], "r") as file:
         config = yaml.load(file, Loader=yaml.SafeLoader)
-        say(config)
+        while True:
+            say(config)
+            time.sleep(1)
