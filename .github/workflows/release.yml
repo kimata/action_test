@@ -74,8 +74,7 @@ jobs:
           windows-icon-from-ico: icon.png
           macos-app-icon: icon.png
           macos-app-name: ${{ env.PROJECT_NAME }}
-          macos-create-app-bundle: true
-          enable-console: true
+          macos-create-app-bundle: false
 
           no-deployment-flag: self-execution
 
