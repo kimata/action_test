@@ -19,7 +19,10 @@ def say(config):
 
 
 def abs_path(config_path):
-    return pathlib.Path(os.getcwd(), config_path)
+    if os.environ.get("PWD") is None:
+        return pathlib.Path(os.getcwd(), config_path)
+    else:
+        return pathlib.Path(os.environ.get("PWD"), config_path)
 
 
 if __name__ == "__main__":
