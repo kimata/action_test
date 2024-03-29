@@ -75,6 +75,7 @@ jobs:
           macos-app-icon: icon.png
           macos-app-name: ${{ env.PROJECT_NAME }}
           macos-create-app-bundle: true
+          enable-console: true
 
           no-deployment-flag: self-execution
 
